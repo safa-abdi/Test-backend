@@ -44,9 +44,11 @@ export class PdfController {
   async downloadPdf(@Param('crmCase') crmCase: string, @Res() res: Response) {
     const { buffer, mimeType } = await this.activationService.getPdf(crmCase);
     res.setHeader('Content-Type', mimeType);
+    const sanitizedCrmCase = String(crmCase).replace(/[^a-zA-Z0-9_-]/g, '_');
+
     res.setHeader(
       'Content-Disposition',
-      `attachment; filename="rapport_${crmCase}.pdf"`,
+      `attachment; filename="rapport_${sanitizedCrmCase}.pdf"`,
     );
     res.send(buffer);
   }
