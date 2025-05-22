@@ -10,6 +10,7 @@ import { LoginTechDto } from './loginTechDto.dto';
 import { ConfigService } from '@nestjs/config';
 import { OtpDto } from './otp.dto';
 import { SmsService } from './SmsService';
+import { randomInt } from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -141,7 +142,10 @@ export class AuthService {
     return { access_token: token };
   }
 
+  // private generateOTP(): string {
+  //   return Math.floor(1000 + Math.random() * 9000).toString(); // Génère un OTP à 4 chiffres
+  // }
   private generateOTP(): string {
-    return Math.floor(1000 + Math.random() * 9000).toString(); // Génère un OTP à 4 chiffres
+    return randomInt(1000, 10000).toString();
   }
 }

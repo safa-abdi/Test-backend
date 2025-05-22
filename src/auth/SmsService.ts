@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Injectable } from '@nestjs/common';
+import { randomInt } from 'crypto';
 import { Twilio } from 'twilio';
 
 @Injectable()
@@ -23,7 +24,6 @@ export class SmsService {
     this.fromNumber = fromNumber;
   }
 
-  // Méthode pour valider le numéro Twilio
   async validateFromNumber(): Promise<void> {
     try {
       const validationRequest =
@@ -42,14 +42,9 @@ export class SmsService {
     }
   }
 
-  // Méthode pour envoyer un SMS (affiche seulement le code OTP en console)
   async sendSms(to: string, message: string): Promise<void> {
     console.log('Numéro de téléphone reçu:', to);
-
-    // Génération du code OTP (par exemple, un code à 6 chiffres)
-    const otpCode = Math.floor(100000 + Math.random() * 900000);
-
-    // Affichage du message dans la console au lieu d'envoi via Twilio
+    const otpCode = randomInt(100000, 1000000);
     console.log(`📲 Code OTP pour ${to}: ${otpCode}`);
     console.log(
       `📩 Message simulé: ${message.replace('{{CODE}}', otpCode.toString())}`,
