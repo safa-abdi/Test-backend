@@ -40,16 +40,16 @@ export class PdfController {
     return { message: 'PDF et informations IMEI sauvegardés avec succès' };
   }
 
-  @Get()
+  @Get(':crmCase')
   async downloadPdf(@Param('crmCase') crmCase: string, @Res() res: Response) {
-    const { buffer, mimeType } = await this.activationService.getPdf(crmCase);
-    res.setHeader('Content-Type', mimeType);
+    const { buffer } = await this.activationService.getPdf(crmCase);
     const sanitizedCrmCase = String(crmCase).replace(/[^a-zA-Z0-9_-]/g, '_');
 
-    res.setHeader(
-      'Content-Disposition',
-      `attachment; filename="rapport_${sanitizedCrmCase}.pdf"`,
-    );
-    res.send(buffer);
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': `attachment; filename="rapport_${sanitizedCrmCase}.pdf"`,
+    });
+
+    return res.end(buffer);
   }
 }
