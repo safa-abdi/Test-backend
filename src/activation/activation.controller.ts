@@ -6,13 +6,11 @@ import {
   Get,
   Param,
   ParseIntPipe,
-  Post,
   Put,
   Query,
 } from '@nestjs/common';
 import { ActivationService } from './activation.service';
 import { Activation } from './entities/activation.entity';
-import { ActivationFiltersDto } from './dto/ActivationFiltersDto';
 import { PaginationDto } from './dto/pagination.dto';
 import { BatchAssignSttDto } from './dto/batch-assign-stt.dto';
 import { ActivationFrozenDto } from './dto/ListPartsActivation.dto';
