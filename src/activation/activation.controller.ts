@@ -15,6 +15,7 @@ import { PaginationDto } from './dto/pagination.dto';
 import { BatchAssignSttDto } from './dto/batch-assign-stt.dto';
 import { ActivationFrozenDto } from './dto/ListPartsActivation.dto';
 import { BatchClotureDto } from './dto/BatchClotureDto.dto';
+import { ActivationFilterDto } from './dto/activation-filter.dto';
 
 @Controller('activation')
 export class ActivationController {
@@ -76,34 +77,53 @@ export class ActivationController {
       STATUT,
     );
   }
+  // @Get('countAll')
+  // async getCount(
+  //   @Query('searchTerm') searchTerm?: string,
+  //   @Query('REP_TRAVAUX_STT') REP_TRAVAUX_STT?: string,
+  //   @Query('gouvernorat') gouvernorat?: string,
+  //   @Query('delegation') delegation?: string,
+  //   @Query('DATE_AFFECTATION_STT') DATE_AFFECTATION_STT?: string,
+  //   @Query('DES_PACK') DES_PACK?: string,
+  //   @Query('offre') offre?: string,
+  //   @Query('REP_RDV') REP_RDV?: string,
+  //   @Query('DATE_PRISE_RDV') DATE_PRISE_RDV?: string,
+  //   @Query('CMT_RDV') CMT_RDV?: string,
+  //   @Query('METRAGE_CABLE') METRAGE_CABLE?: number,
+  // ): Promise<{ STATUT: string; count: number }[]> {
+  //   const result = await this.activationService.countAllByStatusGroupByStatut(
+  //     searchTerm,
+  //     REP_TRAVAUX_STT,
+  //     gouvernorat,
+  //     delegation,
+  //     DATE_AFFECTATION_STT,
+  //     DES_PACK,
+  //     offre,
+  //     REP_RDV,
+  //     DATE_PRISE_RDV,
+  //     CMT_RDV,
+  //     METRAGE_CABLE,
+  //   );
+
+  //   return result;
+  // }
   @Get('countAll')
   async getCount(
-    @Query('searchTerm') searchTerm?: string,
-    @Query('REP_TRAVAUX_STT') REP_TRAVAUX_STT?: string,
-    @Query('gouvernorat') gouvernorat?: string,
-    @Query('delegation') delegation?: string,
-    @Query('DATE_AFFECTATION_STT') DATE_AFFECTATION_STT?: string,
-    @Query('DES_PACK') DES_PACK?: string,
-    @Query('offre') offre?: string,
-    @Query('REP_RDV') REP_RDV?: string,
-    @Query('DATE_PRISE_RDV') DATE_PRISE_RDV?: string,
-    @Query('CMT_RDV') CMT_RDV?: string,
-    @Query('METRAGE_CABLE') METRAGE_CABLE?: number,
+    @Query() filter: ActivationFilterDto,
   ): Promise<{ STATUT: string; count: number }[]> {
     const result = await this.activationService.countAllByStatusGroupByStatut(
-      searchTerm,
-      REP_TRAVAUX_STT,
-      gouvernorat,
-      delegation,
-      DATE_AFFECTATION_STT,
-      DES_PACK,
-      offre,
-      REP_RDV,
-      DATE_PRISE_RDV,
-      CMT_RDV,
-      METRAGE_CABLE,
+      filter.searchTerm,
+      filter.REP_TRAVAUX_STT,
+      filter.gouvernorat,
+      filter.delegation,
+      filter.DATE_AFFECTATION_STT,
+      filter.DES_PACK,
+      filter.offre,
+      filter.REP_RDV,
+      filter.DATE_PRISE_RDV,
+      filter.CMT_RDV,
+      filter.METRAGE_CABLE,
     );
-
     return result;
   }
 
