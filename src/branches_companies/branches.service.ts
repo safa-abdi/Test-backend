@@ -182,7 +182,9 @@ export class BranchesService {
 
     for (const delegation of delegations) {
       const technician = delegation.technicien;
-      const govName = delegation.delegation?.gouver?.name || 'Non spécifié';
+      const govName = (
+        delegation.delegation?.gouver?.name || 'Non spécifié'
+      ).toLowerCase();
 
       if (technician) {
         if (!groupedByGov[govName]) {

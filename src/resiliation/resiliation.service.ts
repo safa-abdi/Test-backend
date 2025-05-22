@@ -177,7 +177,7 @@ export class ResiliationService {
     delegation?: string,
     DATE_AFFECTATION_STT?: string,
     DES_PACK?: string,
-    offre?: string,
+    Detail?: string,
     REP_RDV?: string,
     DATE_PRISE_RDV?: string,
     CMT_RDV?: string,
@@ -209,11 +209,12 @@ export class ResiliationService {
           qb.orWhere(likeCondition('CLIENT'))
             .orWhere(likeCondition('MSISDN'))
             .orWhere(likeCondition('CONTACT_CLIENT'))
+            .orWhere(likeCondition('CONTACT2_CLIENT'))
             .orWhere(likeCondition('Gouvernorat'))
             .orWhere(likeCondition('Delegation'))
             .orWhere(likeCondition('crm_case'))
-            .orWhere(likeCondition('NAME_STT'))
-            .orWhere(likeCondition('offre'));
+            .orWhere(likeCondition('STT'))
+            .orWhere(likeCondition('Detail'));
         }),
       );
     }
@@ -224,7 +225,7 @@ export class ResiliationService {
       Delegation: delegation,
       DATE_AFFECTATION_STT,
       DES_PACK,
-      offre,
+      Detail,
       REP_RDV,
       DATE_PRISE_RDV,
       CMT_RDV,
@@ -290,7 +291,7 @@ export class ResiliationService {
     };
   }
   async assignSTTToresiliation(
-    resiliationId: number,
+    resiliationId: string,
     sttName: string,
     companyDelegationId?: number,
     companyId?: number,
@@ -392,7 +393,7 @@ export class ResiliationService {
     search?: string,
   ): Promise<{
     data: Resiliation[];
-    nextCursor: number | null;
+    nextCursor: string | null;
     hasMore: boolean;
   }> {
     const query = this.ResiliationRepository.createQueryBuilder('p')
@@ -649,7 +650,7 @@ export class ResiliationService {
     }
     return { linked };
   }
-  async linkResiliation_BySpecificCrm_case(crmCase: number): Promise<{
+  async linkResiliation_BySpecificCrm_case(crmCase: string): Promise<{
     success: boolean;
     message: string;
     linkedCompany?: boolean;
@@ -967,7 +968,7 @@ export class ResiliationService {
         'resiliation.LATITUDE_SITE',
         'resiliation.LONGITUDE_SITE',
         'resiliation.MSISDN',
-        'resiliation.CONTACT1_CLIENT',
+        'resiliation.CONTACT_CLIENT',
         'resiliation.CONTACT2_CLIENT',
         'resiliation.CLIENT',
         'resiliation.REP_TRAVAUX_STT',
@@ -1009,7 +1010,7 @@ export class ResiliationService {
     return result;
   }
   async PriseRDV_technicien(
-    resiliationId: number,
+    resiliationId: string,
     DATE_PRISE_RDV: Date,
   ): Promise<Resiliation> {
     const resiliation = await this.ResiliationRepository.findOne({
@@ -1028,7 +1029,7 @@ export class ResiliationService {
   }
 
   async detectRDVPblem_technicien(
-    resiliationId: number,
+    resiliationId: string,
     raison: string,
     cmntr: string,
   ): Promise<Resiliation> {
@@ -1054,7 +1055,7 @@ export class ResiliationService {
     resiliation.CMT_RDV = cmntr;
     return await this.ResiliationRepository.save(resiliation);
   }
-  async MarquerDebut_travaux(resiliationId: number): Promise<Resiliation> {
+  async MarquerDebut_travaux(resiliationId: string): Promise<Resiliation> {
     const resiliation = await this.ResiliationRepository.findOne({
       where: { crm_case: resiliationId },
     });
@@ -1092,7 +1093,7 @@ export class ResiliationService {
           LATITUDE_SITE: resiliation.LATITUDE_SITE,
           LONGITUDE_SITE: resiliation.LONGITUDE_SITE,
           MSISDN: resiliation.MSISDN,
-          CONTACT_CLIENT: resiliation.CONTACT1_CLIENT,
+          CONTACT_CLIENT: resiliation.CONTACT_CLIENT,
           CONTACT2_CLIENT: resiliation.CONTACT2_CLIENT,
           CLIENT: resiliation.CLIENT,
           STT: resiliation.STT,
@@ -1155,7 +1156,7 @@ export class ResiliationService {
       LATITUDE_SITE: resiliation.LATITUDE_SITE,
       LONGITUDE_SITE: resiliation.LONGITUDE_SITE,
       MSISDN: resiliation.MSISDN,
-      CONTACT_CLIENT: resiliation.CONTACT1_CLIENT,
+      CONTACT_CLIENT: resiliation.CONTACT_CLIENT,
       CONTACT2_CLIENT: resiliation.CONTACT2_CLIENT,
       CLIENT: resiliation.CLIENT,
       STT: resiliation.STT,
@@ -1209,7 +1210,7 @@ export class ResiliationService {
       LATITUDE_SITE: resiliation.LATITUDE_SITE,
       LONGITUDE_SITE: resiliation.LONGITUDE_SITE,
       MSISDN: resiliation.MSISDN,
-      CONTACT_CLIENT: resiliation.CONTACT1_CLIENT,
+      CONTACT_CLIENT: resiliation.CONTACT_CLIENT,
       CONTACT2_CLIENT: resiliation.CONTACT2_CLIENT,
       CLIENT: resiliation.CLIENT,
       STT: resiliation.STT,
@@ -1265,7 +1266,7 @@ export class ResiliationService {
       LATITUDE_SITE: resiliation.LATITUDE_SITE,
       LONGITUDE_SITE: resiliation.LONGITUDE_SITE,
       MSISDN: resiliation.MSISDN,
-      CONTACT_CLIENT: resiliation.CONTACT1_CLIENT,
+      CONTACT_CLIENT: resiliation.CONTACT_CLIENT,
       CONTACT2_CLIENT: resiliation.CONTACT2_CLIENT,
       CLIENT: resiliation.CLIENT,
       STT: resiliation.STT,
@@ -1321,7 +1322,7 @@ export class ResiliationService {
       LATITUDE_SITE: resiliation.LATITUDE_SITE,
       LONGITUDE_SITE: resiliation.LONGITUDE_SITE,
       MSISDN: resiliation.MSISDN,
-      CONTACT_CLIENT: resiliation.CONTACT1_CLIENT,
+      CONTACT_CLIENT: resiliation.CONTACT_CLIENT,
       CONTACT2_CLIENT: resiliation.CONTACT2_CLIENT,
       CLIENT: resiliation.CLIENT,
       STT: resiliation.STT,

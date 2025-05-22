@@ -13,7 +13,7 @@ export class ResiliationController {
     @Query('search') search?: string,
   ): Promise<{
     data: Resiliation[];
-    nextCursor: number | null;
+    nextCursor: string | null;
     hasMore: boolean;
   }> {
     const lastId = rawLastId && rawLastId.toString() !== '' ? rawLastId : null;
@@ -43,7 +43,7 @@ export class ResiliationController {
       delegation?: string;
       DATE_AFFECTATION_STT?: string;
       DES_PACK?: string;
-      offre?: string;
+      Detail?: string;
       REP_RDV?: string;
       DATE_PRISE_RDV?: string;
       CMT_RDV?: string;
@@ -60,7 +60,7 @@ export class ResiliationController {
       delegation,
       DATE_AFFECTATION_STT,
       DES_PACK,
-      offre,
+      Detail,
       REP_RDV,
       DATE_PRISE_RDV,
       CMT_RDV,
@@ -78,7 +78,7 @@ export class ResiliationController {
       delegation,
       DATE_AFFECTATION_STT,
       DES_PACK,
-      offre,
+      Detail,
       REP_RDV,
       DATE_PRISE_RDV,
       CMT_RDV,
@@ -105,7 +105,7 @@ export class ResiliationController {
       delegation?: string;
       DATE_AFFECTATION_STT?: string;
       DES_PACK?: string;
-      offre?: string;
+      Detail?: string;
       REP_RDV?: string;
       DATE_PRISE_RDV?: string;
       CMT_RDV?: string;
@@ -122,7 +122,7 @@ export class ResiliationController {
       delegation,
       DATE_AFFECTATION_STT,
       DES_PACK,
-      offre,
+      Detail,
       REP_RDV,
       DATE_PRISE_RDV,
       CMT_RDV,
@@ -140,7 +140,7 @@ export class ResiliationController {
       delegation,
       DATE_AFFECTATION_STT,
       DES_PACK,
-      offre,
+      Detail,
       REP_RDV,
       DATE_PRISE_RDV,
       CMT_RDV,

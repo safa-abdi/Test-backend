@@ -85,7 +85,37 @@ export class PlainteController {
       STATUT,
     );
   }
+  @Get('count-by-status-tech')
+  async getCountByStatus(
+    @Query('sttId') sttId: number,
+    @Query('technicianId') technicianId: number,
+    @Query('Gouv') Gouv: string,
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+  ) {
+    const start = startDate ? new Date(startDate) : undefined;
+    const end = endDate ? new Date(endDate) : undefined;
 
+    return this.plaintesService.getCountOfPlaintesBySttId_technicien(
+      sttId,
+      technicianId,
+      Gouv,
+      start,
+      end,
+    );
+  }
+  @Put('assign-delegation')
+  async assignDelegation(
+    @Body('plainteIds') plainteIds: number[],
+    @Body('technicianId') technicianId: number,
+    @Body('companyId') companyId: number,
+  ): Promise<Plainte[]> {
+    return this.plaintesService.assignTechnicianToActivations(
+      plainteIds,
+      technicianId,
+      companyId,
+    );
+  }
   @Get('inProgress')
   async findAllInProgress(
     @Query('cursor') cursor?: string,
